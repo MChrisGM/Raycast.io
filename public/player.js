@@ -2,7 +2,7 @@ class Player {
     constructor(x, y) {
         this.pos = createVector(x, y);
         this.dir = 0;
-        this.radius = 20;
+        this.radius = 20 * scale;
         this.speed = 2 * scale;
     }
     getPos() {
@@ -11,7 +11,10 @@ class Player {
     getDir() {
         return this.dir;
     }
-    move(angle) {
+    move(dx,dy) {
+      if (dx ==0 && dy == 0){return;}
+      let angle = Math.atan2(-dy,dx);
+
         this.pos.x += this.speed * Math.cos(angle + (this.dir * PI / 180));
         this.pos.y += this.speed * Math.sin(angle + (this.dir * PI / 180));
     }
