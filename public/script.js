@@ -59,7 +59,6 @@ function draw() {
     // background(80);
     rays = [];
 
-
     if (keyIsDown(16)) {
         player.setSpeed(1);
     } else {
@@ -114,8 +113,8 @@ function draw() {
             strokeWeight(lineWidth);
             let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
             line(xLine, 20000 * scale * (1 / (rayDist)), xLine, 20000 * scale * (-1 / (rayDist)));
-            pop();
         }
+        pop();
         // //Display Rays
         // strokeWeight(1);
         // stroke(255);
