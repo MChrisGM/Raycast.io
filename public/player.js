@@ -48,7 +48,8 @@ class Player {
       if (points.length > 0) {
         if (line.p1.x != line.p2.x){
           this.pos.y+= -1*this.vel.y
-        }else if(line.p1.y != line.p2.y){
+        }
+        if(line.p1.y != line.p2.y){
           this.pos.x += -1*this.vel.x
         }
 

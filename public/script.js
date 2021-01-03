@@ -1,7 +1,7 @@
 let canvas;
 let socket;
 let player;
-let fov = 75;
+let fov = 60;
 let lineWidth;
 let res = 4;
 let scale;
@@ -19,7 +19,7 @@ function windowResized() {
   setSize();
 }
 
-function setSize(){
+function setSize() {
   if (window.innerHeight < window.innerWidth) {
     canvas = createCanvas(window.innerHeight, window.innerHeight);
     scale = height / 500;
@@ -27,7 +27,7 @@ function setSize(){
     canvas = createCanvas(window.innerWidth, window.innerWidth);
     scale = width / 500;
   }
-  lineWidth = 1 + width / (fov*res);
+  lineWidth = 1 + width / (fov * res);
   player = new Player(150 * scale, 150 * scale);
   yAxis = height / 2;
   formatScale();
@@ -41,22 +41,15 @@ function formatScale() {
   }
 }
 
-
-function draw() {
-  requestPointerLock();
-  background(0);
-  // background(80);
-  rays = [];
-
+function playerSpeed() {
   if (keyIsDown(16)) {
     player.setSpeed(1);
   } else {
     player.setSpeed(2);
   }
+}
 
-  playerMovement();
-
-
+function playerDirection() {
   if (player.getDir() < -180) {
     player.dir = 180 + (180 + player.getDir());
   }
@@ -64,7 +57,20 @@ function draw() {
     player.dir = -180 + (player.getDir() - 180);
   }
   player.changeDir(int(movedX) * sensX);
+}
 
+
+function draw() {
+  requestPointerLock();
+
+  background(0);
+  // background(80);
+
+  rays = [];
+
+  playerSpeed();
+  playerMovement();
+  playerDirection();
 
   if (yAxis <= 2 * height && yAxis >= -height) {
     yAxis -= movedY;
@@ -100,7 +106,7 @@ function draw() {
   for (var i = (dir - fov / 2); i < dir + fov / 2; i += 1 / res) {
     let ray = new Ray(x, y, i);
     let rayDist = ray.getDist();
-    ray.setLength(rayDist * cos(i * PI / 180));
+    ray.setLength(rayDist * cos((i-dir) *PI/180));
 
     push();
     translate(0, yAxis);
@@ -108,9 +114,11 @@ function draw() {
       stroke(map(rayDist, 0, 800, 200, 100));
       strokeWeight(lineWidth);
       let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
-      line(xLine, 20000 * scale * (1 / (rayDist)), xLine, 20000 * scale * (-1 / (rayDist)));
+      // line(xLine, 20000 * scale * (1 / (rayDist)), xLine, 20000 * scale * (-1 / (rayDist)));
+      line(xLine, 28*height*scale/rayDist, xLine, -28*height*scale/rayDist);
     }
     pop();
+
     //Display Rays
     // strokeWeight(1);
     // stroke(255);
@@ -144,8 +152,8 @@ function playerRotate() {
 
 
 function playerMovement() {
-  let dirX=0;
-  let dirY=0;
+  let dirX = 0;
+  let dirY = 0;
   if (keyIsDown(87)) { //W
     dirY += 1;
   }
@@ -158,5 +166,5 @@ function playerMovement() {
   if (keyIsDown(68)) {  //D
     dirX += 1;
   }
-  player.move(dirX,dirY);
+  player.move(dirX, dirY);
 }
