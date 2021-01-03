@@ -3,7 +3,7 @@ let socket;
 let player;
 let fov = 60;
 let lineWidth;
-let res = 4;
+let res = 1;
 let scale;
 let walls = premadeWalls;
 let sensX = 0.05;
@@ -27,7 +27,7 @@ function setSize() {
     canvas = createCanvas(window.innerWidth, window.innerWidth);
     scale = width / 500;
   }
-  lineWidth = 1 + width / (fov * res);
+  lineWidth = -2 + width / (fov * res);
   player = new Player(150 * scale, 150 * scale);
   yAxis = height / 2;
   formatScale();
@@ -35,7 +35,7 @@ function setSize() {
 
 function formatScale() {
   for (var i = 0; i < walls.length; i++) {
-    for (var j = 0; j < walls[i].length; j++) {
+    for (var j = 0; j < walls[i].length - 1; j++) {
       walls[i][j] *= scale;
     }
   }
@@ -65,6 +65,8 @@ function draw() {
 
   background(0);
   // background(80);
+
+  strokeCap(PROJECT); 
 
   rays = [];
 
@@ -100,23 +102,38 @@ function draw() {
   // }
 
   //Display floor
-  fill(80);
-  rect(0, yAxis, width, 3 * height);
+  // fill(80);
+  // rect(0, yAxis, width, 3 * height);
 
   for (var i = (dir - fov / 2); i < dir + fov / 2; i += 1 / res) {
     let ray = new Ray(x, y, i);
-    ray.setLength(ray.getDist() * cos((i-dir) *PI/180));
-    let rayDist = ray.getLength();
 
-    push();
-    translate(0, yAxis);
-    if (rayDist > 0) {
-      stroke(map(rayDist, 0, 800, 200, 100));
-      strokeWeight(lineWidth);
-      let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
-      line(xLine, (30*height*scale)/(2*rayDist), xLine, (-30*height*scale)/(2*rayDist));
+    let rayDistances = ray.getDist()
+
+    rayDistances = rayDistances.reverse();
+
+    for (let distance of rayDistances) {
+      ray.setLength(distance[0] * cos((i - dir) * PI / 180));
+      let rayDist = ray.getLength();
+
+      push();
+      translate(0, yAxis);
+      if (rayDist > 0) {
+        stroke(map(rayDist, 0, 800, 200, 100));
+        strokeWeight(lineWidth);
+        let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
+        if (distance[1] > 0.5) {
+          line(xLine, (distance[1]) * (30 * height * scale) / (2 * rayDist), xLine, (-30 * height * scale) / (2 * rayDist));
+        } else if (distance[1] != 0 && distance[1] <= 0.5) {
+          line(xLine, (30 * height * scale) / (2 * rayDist), xLine, (distance[1]-0.5) * (-30 * height * scale) / (2 * rayDist));
+        }
+
+      }
+      pop();
+
     }
-    pop();
+
+
 
     //Display Rays
     // strokeWeight(1);
