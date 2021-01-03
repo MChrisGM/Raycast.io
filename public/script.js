@@ -101,12 +101,12 @@ function draw() {
 
   //Display floor
   fill(80);
-  rect(0, yAxis, width, 2 * height);
+  rect(0, yAxis, width, 3 * height);
 
   for (var i = (dir - fov / 2); i < dir + fov / 2; i += 1 / res) {
     let ray = new Ray(x, y, i);
-    let rayDist = ray.getDist();
-    ray.setLength(rayDist * cos((i-dir) *PI/180));
+    ray.setLength(ray.getDist() * cos((i-dir) *PI/180));
+    let rayDist = ray.getLength();
 
     push();
     translate(0, yAxis);
@@ -114,8 +114,7 @@ function draw() {
       stroke(map(rayDist, 0, 800, 200, 100));
       strokeWeight(lineWidth);
       let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
-      // line(xLine, 20000 * scale * (1 / (rayDist)), xLine, 20000 * scale * (-1 / (rayDist)));
-      line(xLine, 28*height*scale/rayDist, xLine, -28*height*scale/rayDist);
+      line(xLine, (30*height*scale)/(2*rayDist), xLine, (-30*height*scale)/(2*rayDist));
     }
     pop();
 

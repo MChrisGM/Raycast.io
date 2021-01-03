@@ -11,6 +11,10 @@ class Ray {
         this.pos2 = createVector(this.pos1.x + this.l * sin(this.dir * PI / 180), this.pos1.y - this.l * cos(this.dir * PI / 180));
     }
 
+    getLength(){
+      return this.l;
+    }
+
     getDir() {
         return this.dir;
     }
