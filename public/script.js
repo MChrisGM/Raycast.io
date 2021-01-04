@@ -3,7 +3,7 @@ let socket;
 let player;
 let fov = 60;
 let lineWidth;
-let res = 1;
+let res = 5;
 let scale;
 let walls = premadeWalls;
 let sensX = 0.05;
@@ -27,7 +27,7 @@ function setSize() {
     canvas = createCanvas(window.innerWidth, window.innerWidth);
     scale = width / 500;
   }
-  lineWidth = -2 + width / (fov * res);
+  lineWidth = 1 + width / (fov * res);
   player = new Player(150 * scale, 150 * scale);
   yAxis = height / 2;
   formatScale();
@@ -66,7 +66,7 @@ function draw() {
   background(0);
   // background(80);
 
-  strokeCap(PROJECT); 
+  strokeCap(ROUND);
 
   rays = [];
 
@@ -104,6 +104,10 @@ function draw() {
   //Display floor
   // fill(80);
   // rect(0, yAxis, width, 3 * height);
+  let surface = {
+    p1: { y: null, h: null },
+    p2: { y: null, h: null }
+  };
 
   for (var i = (dir - fov / 2); i < dir + fov / 2; i += 1 / res) {
     let ray = new Ray(x, y, i);
@@ -122,10 +126,35 @@ function draw() {
         stroke(map(rayDist, 0, 800, 200, 100));
         strokeWeight(lineWidth);
         let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
+
         if (distance[1] > 0.5) {
           line(xLine, (distance[1]) * (30 * height * scale) / (2 * rayDist), xLine, (-30 * height * scale) / (2 * rayDist));
-        } else if (distance[1] != 0 && distance[1] <= 0.5) {
-          line(xLine, (30 * height * scale) / (2 * rayDist), xLine, (distance[1]-0.5) * (-30 * height * scale) / (2 * rayDist));
+          // if (surface.p1.y != null && surface.p1.h == distance[1]) {
+          //   surface.p2.y = (distance[1]) * (30 * height * scale) / (2 * rayDist);
+            
+          // } else {
+          //   surface.p1.y = (-30 * height * scale) / (2 * rayDist);
+          //   surface.p1.h = distance[1]; 
+          // }
+        }
+
+        else if (distance[1] != 0 && distance[1] <= 0.5) {
+          line(xLine, (30 * height * scale) / (2 * rayDist), xLine, (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist));
+
+          if (surface.p1.y != null && surface.p1.h == distance[1]) {
+            surface.p2.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
+          } else {
+            surface.p1.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
+            surface.p1.h = distance[1]; 
+          }
+        }
+        if (surface.p1.y != null && surface.p2.y != null) {
+          // stroke(255);
+          line(xLine, surface.p1.y, xLine, surface.p2.y);
+          surface = {
+            p1: { y: null, h: null },
+            p2: { y: null, h: null }
+          };
         }
 
       }

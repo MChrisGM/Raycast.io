@@ -41,7 +41,7 @@ class Ray {
     let maxH = 0;
     let minD = 0;
     for(let elm of distances){
-      if (elm[1] >= maxH && elm[0] > minD && maxH != 1){
+      if (elm[0] > minD && maxH != 1){
         rays.push(elm);
         maxH = elm[1];
         minD = elm[0];
