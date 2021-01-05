@@ -102,8 +102,8 @@ function draw() {
   // }
 
   //Display floor
-  // fill(80);
-  // rect(0, yAxis, width, 3 * height);
+  fill(80);
+  rect(0, yAxis, width, 3 * height);
   let surface = {
     p1: { y: null, h: null },
     p2: { y: null, h: null }
@@ -149,7 +149,7 @@ function draw() {
           }
         }
         if (surface.p1.y != null && surface.p2.y != null) {
-          // stroke(255);
+          // stroke(0,0,255);
           line(xLine, surface.p1.y, xLine, surface.p2.y);
           surface = {
             p1: { y: null, h: null },
