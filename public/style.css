@@ -1,13 +1,3 @@
-body {
-    overflow-y: hidden;
-    /* Hide vertical scrollbar */
-    overflow-x: hidden;
-    /* Hide horizontal scrollbar */
-    padding: 0%;
-    margin: 0px;
-    background: rgb(41, 41, 41);
-}
-
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -23,4 +13,375 @@ canvas {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+
+head, body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: rgb(82, 82, 82);
+}
+
+#usernameInput {
+    width: 300px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 14px;
+    font-size: 25px;
+    border-width: 2px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 22px rgba(66, 66, 66, .80);
+    text-shadow: 0px 0px 0px rgba(66, 66, 66, .75);
+    text-align: center;
+}
+
+input[type="Username"]::placeholder {
+    /* Firefox, Chrome, Opera */
+    text-align: center;
+}
+
+input[type="Username"]:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    text-align: center;
+}
+
+input[type="Username"]::-ms-input-placeholder {
+    /* Microsoft Edge */
+    text-align: center;
+}
+
+#createLobby {
+    width: 300px;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 1px 0px 0px #1c1b18;
+    background: linear-gradient(to bottom, #fffefc 5%, #9e916d 100%);
+    background-color: #fffefc;
+    border-radius: 15px;
+    border: 2px solid #333029;
+    display: inline-block;
+    cursor: pointer;
+    color: #505739;
+    font-family: Arial;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+
+#createLobby:hover {
+    background: linear-gradient(to bottom, #9e916d 5%, #fffefc 100%);
+    background-color: #9e916d;
+}
+
+#createLobby:active {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#randomLobby {
+    width: 300px;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 1px 0px 0px #1c1b18;
+    background: linear-gradient(to bottom, #fffefc 5%, #9e916d 100%);
+    background-color: #fffefc;
+    border-radius: 15px;
+    border: 2px solid #333029;
+    display: inline-block;
+    cursor: pointer;
+    color: #505739;
+    font-family: Arial;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+
+#randomLobby:hover {
+    background: linear-gradient(to bottom, #9e916d 5%, #fffefc 100%);
+    background-color: #9e916d;
+}
+
+#randomLobby:active {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#codeLobby {
+    width: 300px;
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 14px;
+    font-size: 20px;
+    border-width: 2px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 22px rgba(66, 66, 66, .80);
+    text-shadow: 0px 0px 0px rgba(66, 66, 66, .75);
+    text-align: center;
+}
+
+input[type="Username"]::placeholder {
+    /* Firefox, Chrome, Opera */
+    text-align: center;
+}
+
+input[type="Username"]:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    text-align: center;
+}
+
+input[type="Username"]::-ms-input-placeholder {
+    /* Microsoft Edge */
+    text-align: center;
+}
+
+#codeLobbyBtn {
+    position: absolute;
+    top: 55%;
+    left: 62%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 1px 0px 0px #1c1b18;
+    background: linear-gradient(to bottom, #fffefc 5%, #9e916d 100%);
+    background-color: #fffefc;
+    border-radius: 15px;
+    border: 2px solid #333029;
+    display: inline-block;
+    cursor: pointer;
+    color: #505739;
+    font-family: Arial;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+
+#codeLobbyBtn:hover {
+    background: linear-gradient(to bottom, #9e916d 5%, #fffefc 100%);
+    background-color: #9e916d;
+}
+
+#codeLobbyBtn:active {
+    position: absolute;
+    top: 55%;
+    left: 62%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.toprightcorner {
+    position: absolute;
+    top: 5%;
+    right: 4%;
+}
+
+.topleftcorner {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.bottomleftcorner {
+    position: fixed;
+    bottom: 1%;
+    left: 1%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    font-size: 14px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    font-size: 14px;
+}
+
+.copyCode {
+    box-shadow: 0px 1px 0px 0px #1c1b18;
+    background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+    background-color: #eae0c2;
+    border-radius: 15px;
+    border: 1px solid #333029;
+    display: inline-block;
+    cursor: pointer;
+    color: #505739;
+    font-family: Arial;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 6px 8px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff;
+}
+
+.copyCode:hover {
+    background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+    background-color: #ccc2a6;
+}
+
+.copyCode:active {
+    position: relative;
+    top: 1px;
+}
+
+#playersDiv {
+    font-size: 25px;
+    color: white;
+    border-radius: 5px;
+    border-width: 3px;
+    background-color: rgba(48, 48, 48, 0.8);
+    text-shadow: #000000;
+    border: 3px solid rgba(48, 48, 48, 0.9);
+}
+
+#codeDiv {
+    font-size: 25px;
+    color: white;
+    border-radius: 5px;
+    border-width: 3px;
+    background-color: rgba(48, 48, 48, 0.8);
+    text-shadow: #000000;
+    border: 3px solid rgba(48, 48, 48, 0.9);
+}
+
+#chatDiv {
+    position: absolute;
+    background-color: rgba(48, 48, 48, 0.8);
+    max-height: 30%;
+    max-width: 25%;
+    width: 100%;
+    height: 100%;
+    border: 3px solid rgba(48, 48, 48, 0.9);
+    border-radius: 10px;
+}
+
+#chatTextDiv {
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    max-height: 87%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+#chatInput {
+    position: absolute;
+    bottom: 5px;
+    left: 3%;
+    max-width: 100%;
+    width: 92%;
+    height: 100%;
+    max-height: 10%;
+    border-radius: 5px;
+    border-width: 2px;
+    font-size: large;
+    background-color: #555;
+    color: #fff;
+}
+
+.username {
+    font-size: x-large;
+    font-weight: bold;
+    padding-right: 20px;
+}
+
+.message {
+    font-size: larger;
+}
+
+#chatTextDiv::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #747474;
+}
+
+#chatTextDiv::-webkit-scrollbar {
+    border-radius: 10px;
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+#chatTextDiv::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #ffffff;
+}
+
+.messageTime {
+    display: inline-block;
+    font-size: medium;
+    color: rgb(218, 218, 218);
+    /* left: 20px; */
+}
+
+#pauseDiv {
+    display: block;
+    background-color: rgb(0, 0, 0, 0.6);
 }

@@ -131,7 +131,7 @@ function draw() {
           line(xLine, (distance[1]) * (30 * height * scale) / (2 * rayDist), xLine, (-30 * height * scale) / (2 * rayDist));
           // if (surface.p1.y != null && surface.p1.h == distance[1]) {
           //   surface.p2.y = (distance[1]) * (30 * height * scale) / (2 * rayDist);
-            
+
           // } else {
           //   surface.p1.y = (-30 * height * scale) / (2 * rayDist);
           //   surface.p1.h = distance[1]; 
@@ -145,7 +145,7 @@ function draw() {
             surface.p2.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
           } else {
             surface.p1.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
-            surface.p1.h = distance[1]; 
+            surface.p1.h = distance[1];
           }
         }
         if (surface.p1.y != null && surface.p2.y != null) {
