@@ -272,8 +272,10 @@ function main() {
 }
 
 function rayCast() {
+  if(moving){
     requestPointerLock();
-
+  }
+    
     // background(0);
     background(80);
 
@@ -398,7 +400,7 @@ function rayCast() {
 }
 
 function playerMovement() {
-    if (!paused) {
+    if (!paused && moving) {
         let dirX = 0;
         let dirY = 0;
         if (keyIsDown(87)) { //W
@@ -418,7 +420,7 @@ function playerMovement() {
 
 }
 function playerSpeed() {
-    if (!paused) {
+    if (!paused && moving) {
         if (keyIsDown(16)) {
             player.setSpeed(1);
         } else {
@@ -428,7 +430,7 @@ function playerSpeed() {
 }
 
 function playerDirection() {
-    if (!paused) {
+    if (!paused && moving) {
         if (player.getDir() < -180) {
             player.dir = 180 + (180 + player.getDir());
         }
