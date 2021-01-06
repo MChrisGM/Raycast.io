@@ -272,7 +272,7 @@ function main() {
 }
 
 function rayCast() {
-  if(moving){
+  if(moving && !paused){
     requestPointerLock();
   }
     
