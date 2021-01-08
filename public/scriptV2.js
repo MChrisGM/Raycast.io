@@ -28,12 +28,13 @@ let fov = 60;
 let lineWidth;
 let res = 5;
 let scale;
-let walls = premadeWalls;
+let initWalls = JSON.stringify(premadeWalls);
+// let walls = [...premadeWalls];
+let walls = JSON.parse(initWalls);
 let sensX = 0.05;
 let yAxis;
 
 function preload() {
-    // bg = loadImage('assets/grid-4k-50.png');
 }
 
 function socketFunctions() {
@@ -136,16 +137,27 @@ function UIFunctions() {
     pauseDiv.hide();
 }
 
-function setSize() {
+function setSize(resizing) {
+  let pScale;
+  let pPos;
+  if (resizing){
+    pScale = scale;
+    pPos = player.getPos();
+  }
     if (window.innerHeight < window.innerWidth) {
-        canvas = createCanvas(window.innerHeight, window.innerHeight);
-        scale = height / 500;
+        resizeCanvas(window.innerHeight,window.innerHeight);
+        scale = window.innerHeight / 500;
     } else {
-        canvas = createCanvas(window.innerWidth, window.innerWidth);
-        scale = width / 500;
+        resizeCanvas(window.innerWidth,window.innerWidth);
+        scale = window.innerWidth / 500;
     }
     lineWidth = 1 + width / (fov * res);
     player = new Player(150 * scale, 150 * scale, pID);
+    if(resizing){
+      let x = (pPos.x/pScale)*scale;
+      let y = (pPos.y/pScale)*scale;
+      player.setPos(x,y);
+    }
     yAxis = height / 2;
     formatScale();
 }
@@ -159,13 +171,15 @@ function formatScale() {
 }
 
 function windowResized() {
-    walls = premadeWalls;
-    setSize();
-    pauseDiv.size(innerWidth, innerHeight);
+    walls = JSON.parse(initWalls);
+    setSize(true);
+    pauseDiv.size(window.innerWidth, window.innerHeight);
 }
 
 function setup() {
 
+    canvas = createCanvas();
+    
     socketFunctions();
 
     setSize();

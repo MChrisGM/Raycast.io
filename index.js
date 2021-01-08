@@ -126,7 +126,7 @@ io.sockets.on('connection',
                 names: [],
                 positions: []
             };
-            if (Object.keys(lobbies).length > 0) {
+            if (Object.keys(lobbies).length > 0 && lobbies[players[pID].lobby] ) {
                 for (let player of lobbies[players[pID].lobby].players) {
                     playerInfo.ids.push(players[player].id);
                     playerInfo.names.push(players[player].name);

@@ -17,6 +17,10 @@ class Player {
   getUname() {
     return this.uname;
   }
+  setPos(x,y){
+    this.pos.x = x;
+    this.pos.y = y;
+  }
 
   getPos() {
     return this.pos;
