@@ -50,10 +50,29 @@ class Ray {
       }
       let points = inteceptCircleLineSeg(player, line);
 
+      // let point = intersect(this.pos1.x, this.pos1.y, this.pos2.x, this.pos2.y, player.center.x-1, player.center.y-1, player.center.x+1, player.center.y+1);
+
+      let point = true;
+
       if (points.length > 0) {
-        distances.push([dist(points[0].x,points[0].y,this.pos1.x,this.pos1.y), 0.5,'player']);
+        if(point!=false){
+          distances.push([dist(points[0].x,points[0].y,this.pos1.x,this.pos1.y), 0.5,'player', pla.getUname()]);
+        }else{
+          distances.push([dist(points[0].x,points[0].y,this.pos1.x,this.pos1.y), 0.5,'player']);
+        }
+        
+        
       }
 
+    }
+
+    function sortFunction(a, b) {
+      if (a[0] === b[0]) {
+        return 0;
+      }
+      else {
+        return (a[0] < b[0]) ? -1 : 1;
+      }
     }
 
     distances = distances.sort(sortFunction);
@@ -69,15 +88,6 @@ class Ray {
       }
     }
 
-
-    function sortFunction(a, b) {
-      if (a[0] === b[0]) {
-        return 0;
-      }
-      else {
-        return (a[0] < b[0]) ? -1 : 1;
-      }
-    }
 
     if (rays.length > 0) {
       return rays;

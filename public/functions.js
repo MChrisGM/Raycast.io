@@ -25,6 +25,9 @@ function keyPressed() {
         //   console.log('Paused');
         paused = !paused;
     }
+    if(keyCode == 84){
+      toggleChat();
+    }
     // return false; // prevent default
 }
 

@@ -26,7 +26,7 @@ let pauseDiv;
 
 let fov = 60;
 let lineWidth;
-let res = 5;
+let res = 4;
 let scale;
 let initWalls = JSON.stringify(premadeWalls);
 // let walls = [...premadeWalls];
@@ -301,14 +301,16 @@ function rayCast() {
   playerMovement();
   playerDirection();
 
-  if (yAxis <= 2 * height && yAxis >= -height) {
-    yAxis -= movedY;
-  } else {
-    if (yAxis > 2 * height) {
-      yAxis -= 1;
-    }
-    if (yAxis < -height) {
-      yAxis += 1;
+  if (moving && !paused) {
+    if (yAxis <= 2 * height && yAxis >= -height) {
+      yAxis -= movedY;
+    } else {
+      if (yAxis > 2 * height) {
+        yAxis -= 1;
+      }
+      if (yAxis < -height) {
+        yAxis += 1;
+      }
     }
   }
 
@@ -337,6 +339,8 @@ function rayCast() {
     p2: { y: null, h: null }
   };
 
+  const players = new Map()/*<string (username), [ int (firstXLine), int (lastXLine) ]>*/;
+
   for (var i = (dir - fov / 2); i < dir + fov / 2; i += 1 / res) {
     let ray = new Ray(x, y, i);
 
@@ -350,17 +354,33 @@ function rayCast() {
 
       push();
       translate(0, yAxis);
+      let username = "";
+      let lineStroke;
       if (rayDist > 0) {
+        let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
+
         if (distance[2] == "player") {
+
           let color = hsvToRgb(200, 100, map(rayDist, 0, 800, 100, 50));
-          stroke(color[0], color[1], color[2]);
+          lineStroke = { r: color[0], g: color[1], b: color[2] };
+
+          if (players.get(distance[3]) == null) {
+            players.set(distance[3], [xLine, xLine, rayDist]);
+          } else {
+            const firstXLine = players.get(distance[3])[0];
+            players.set(distance[3], [firstXLine, xLine, rayDist]);
+          }
+
         } else {
-          stroke(map(rayDist, 0, 800, 200, 100));
+          lineStroke = { r: map(rayDist, 0, 800, 200, 100), g: map(rayDist, 0, 800, 200, 100), b: map(rayDist, 0, 800, 200, 100) };
         }
 
         strokeWeight(lineWidth);
-        let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
 
+
+
+
+        stroke(lineStroke.r, lineStroke.g, lineStroke.b);
         if (distance[1] > 0.5) {
 
           line(xLine, (distance[1]) * (30 * height * scale) / (2 * rayDist),
@@ -394,12 +414,12 @@ function rayCast() {
           };
         }
 
+
       }
+
       pop();
 
     }
-
-
 
     //Display Rays
     // strokeWeight(1);
@@ -414,12 +434,32 @@ function rayCast() {
   // let povLine = createVector(x + 1000 * sin(dir * PI / 180), y - 1000 * cos(dir * PI / 180));
   // line(x, y, povLine.x, povLine.y);
 
+  displayNames(players);
 
   //Show crosshair
   fill(0, 255, 0);
   stroke(0);
   strokeWeight(1);
   ellipse(width / 2, height / 2, 5, 5);
+}
+
+function displayNames(players) {
+  textAlign(CENTER);
+  textStyle(NORMAL);
+  strokeWeight(4);
+  stroke(0);
+  fill(255);
+
+
+  push();
+  translate(0, yAxis);
+
+  for (let [username, xLines] of players) {
+    const xLine = (xLines[0] + xLines[1]) / 2;
+    textSize((8000 * scale) / xLines[2]);
+    text(username, xLine, -20);
+  }
+  pop();
 }
 
 function playerMovement() {

@@ -67,4 +67,5 @@ function createMessage(messageInfo) {
 
   var objDiv = document.getElementById("chatTextDiv");
   objDiv.scrollTop = objDiv.scrollHeight;
+  toggleCanvas();
 }
