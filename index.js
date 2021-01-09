@@ -46,16 +46,18 @@ io.sockets.on('connection',
         //-----------------------------------------------------------Repeat Message---------------------------------------------------------------------
         socket.on('sendMessage', function (data) {
 
-            let date_ob = new Date();
-            let hours = date_ob.getUTCHours() + "";
-            let minutes = date_ob.getUTCMinutes() + "";
-            if (hours.length == 1) {
-                hours = "0" + hours;
-            }
-            if (minutes.length == 1) {
-                minutes = "0" + minutes;
-            }
-            data.time = hours + ":" + minutes;
+            // let date_ob = new Date();
+            // let hours = date_ob.getUTCHours() + "";
+            // let minutes = date_ob.getUTCMinutes() + "";
+            // if (hours.length == 1) {
+            //     hours = "0" + hours;
+            // }
+            // if (minutes.length == 1) {
+            //     minutes = "0" + minutes;
+            // }
+            // data.time = hours + ":" + minutes;
+
+            data.time = Date.now();
 
             io.in(players[pID].lobby).emit('receiveMessage', data);
         });

@@ -2,7 +2,7 @@ class Player {
   constructor(x, y, id, name) {
     this.pos = createVector(x, y);
     this.dir = 0;
-    this.radius = 10 * scale;
+    this.radius = 5 * scale;
     this.speed = 2 * scale;
     this.vel = createVector();
     this.uname = name;
