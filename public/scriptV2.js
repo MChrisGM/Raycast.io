@@ -366,10 +366,11 @@ function rayCast() {
           let color = hsvToRgb(200, 100, map(rayDist, 0, 800, 100, 50));
           colFilling = { type: 'color', r: color[0], g: color[1], b: color[2] };
 
-          if (players.get(distance[6]) == null) {
-            players.set(distance[6], [colX, colX, rayDist]);
+          if (players.get(distance[3]) == null) {
+            players.set(distance[3], [colX, colX, rayDist]);
           } else {
-            players.set(distance[6], [players.get(distance[6])[0], colX, rayDist]);
+            const firstColX = players.get(distance[3])[0];
+            players.set(distance[3], [firstColX, colX, rayDist]);
           }
 
         } else {
