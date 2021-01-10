@@ -26,7 +26,7 @@ let pauseDiv;
 
 let fov = 60;
 let lineWidth;
-let res = 4;
+let res = 2;
 let scale;
 let initWalls = JSON.stringify(premadeWalls);
 // let walls = [...premadeWalls];
@@ -34,7 +34,11 @@ let walls = JSON.parse(initWalls);
 let sensX = 0.05;
 let yAxis;
 
+// texture of the raycasted walls
+let wallTex;
+
 function preload() {
+  wallTex = loadImage('assets/bluestone.png');
 }
 
 function socketFunctions() {
@@ -293,8 +297,6 @@ function rayCast() {
   background(0);
   // background(80);
 
-  strokeCap(ROUND);
-
   rays = [];
 
   playerSpeed();
@@ -355,59 +357,78 @@ function rayCast() {
       push();
       translate(0, yAxis);
       let username = "";
-      let lineStroke;
       if (rayDist > 0) {
-        let xLine = map(i - dir, -fov / 2, fov / 2, 0, width);
+        // a "column" is the vertical line that'll be drawn on the canvas
+        let colX = map(i - dir, -fov / 2, fov / 2, 0, width);
+        let colFilling;
 
         if (distance[2] == "player") {
-
           let color = hsvToRgb(200, 100, map(rayDist, 0, 800, 100, 50));
-          lineStroke = { r: color[0], g: color[1], b: color[2] };
+          colFilling = { type: 'color', r: color[0], g: color[1], b: color[2] };
 
-          if (players.get(distance[3]) == null) {
-            players.set(distance[3], [xLine, xLine, rayDist]);
+          if (players.get(distance[6]) == null) {
+            players.set(distance[6], [colX, colX, rayDist]);
           } else {
-            const firstXLine = players.get(distance[3])[0];
-            players.set(distance[3], [firstXLine, xLine, rayDist]);
+            players.set(distance[6], [players.get(distance[6])[0], colX, rayDist]);
           }
 
         } else {
-          lineStroke = { r: map(rayDist, 0, 800, 200, 100), g: map(rayDist, 0, 800, 200, 100), b: map(rayDist, 0, 800, 200, 100) };
-        }
 
-        strokeWeight(lineWidth);
-
-
-
-
-        stroke(lineStroke.r, lineStroke.g, lineStroke.b);
-        if (distance[1] > 0.5) {
-
-          line(xLine, (distance[1]) * (30 * height * scale) / (2 * rayDist),
-            xLine, (-30 * height * scale) / (2 * rayDist));
-
-          // if (surface.p1.y != null && surface.p1.h == distance[1]) {
-          //   surface.p2.y = (distance[1]) * (30 * height * scale) / (2 * rayDist);
-
-          // } else {
-          //   surface.p1.y = (-30 * height * scale) / (2 * rayDist);
-          //   surface.p1.h = distance[1]; 
-          // }
-        }
-
-        else if (distance[1] != 0 && distance[1] <= 0.5) {
-          line(xLine, (30 * height * scale) / (2 * rayDist), xLine, (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist));
-
-          if (surface.p1.y != null && surface.p1.h == distance[1]) {
-            surface.p2.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
+          let wallLeft, wallRight;
+          let contactCoord;
+          if (distance[4].x == distance[5].x) {
+            wallLeft = distance[4].y;
+            wallRight = distance[5].y;
+            contactCoord = distance[3].y;
           } else {
-            surface.p1.y = (distance[1] - 0.5) * (-30 * height * scale) / (2 * rayDist);
+            wallLeft = distance[4].x;
+            wallRight = distance[5].x;
+            contactCoord = distance[3].x;
+          }
+
+          colFilling = { type: 'tex', tex: wallTex, xOnTex: 0 };
+          // repeats the tex, mapping 1 units in-game to 1 pixel on tex
+          colFilling.xOnTex = floor(map(contactCoord, wallLeft, wallRight, 0, abs(wallRight - wallLeft)) / (2/3)) % colFilling.tex.width;
+          // streches the tex
+          //colFilling.xOnTex = floor(map(contactCoord, wallLeft, wallRight, 0, colFilling.tex.width));
+
+
+          //colFilling = { type: 'color', r: 200, g: 200, b: 200 };
+        }
+
+
+        let colWidth = lineWidth;
+        let colBottom = (30 * height * scale) / (2 * rayDist);
+        let colHeight = colBottom * 2 * distance[1];
+        let colTop = colBottom - colHeight;
+
+        if (colFilling.type == 'color') {
+          strokeWeight(0);
+          fill(colFilling.r, colFilling.g, colFilling.b);
+          rect(colX, colTop, colWidth, colHeight);
+        } else if (colFilling.type == 'tex') {
+          image(colFilling.tex,
+                colX, colTop, colWidth, colHeight,
+                colFilling.xOnTex, 0, 1, colFilling.tex.height);
+        }
+
+        // fog, the game lags a bit with this on sadly :(
+        strokeWeight(0);
+        fill(0, 0, 0, map(distance[0], 0, 800, 0, 100));
+        rect(colX, colTop, colWidth, colHeight);
+
+        if (distance[1] != 0 && distance[1] < 0.5) {
+          if (surface.p1.y != null && surface.p1.h == distance[1]) {
+            surface.p2.y = colTop;
+          } else {
+            surface.p1.y = colTop;
             surface.p1.h = distance[1];
           }
         }
         if (surface.p1.y != null && surface.p2.y != null) {
-          // stroke(0,0,255);
-          line(xLine, surface.p1.y, xLine, surface.p2.y);
+          strokeWeight(0);
+          fill(255, 255, 255); // color of the top of the wall
+          rect(colX, surface.p1.y, colWidth, surface.p2.y - surface.p1.y);
           surface = {
             p1: { y: null, h: null },
             p2: { y: null, h: null }
@@ -454,10 +475,10 @@ function displayNames(players) {
   push();
   translate(0, yAxis);
 
-  for (let [username, xLines] of players) {
-    const xLine = (xLines[0] + xLines[1]) / 2;
-    textSize((8000 * scale) / xLines[2]);
-    text(username, xLine, -20);
+  for (let [username, colXs] of players) {
+    const colX = (colXs[0] + colXs[1]) / 2;
+    textSize((8000 * scale) / colXs[2]);
+    text(username, colX, -20);
   }
   pop();
 }
