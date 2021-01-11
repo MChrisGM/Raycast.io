@@ -428,7 +428,7 @@ function rayCast() {
         }
         if (surface.p1.y != null && surface.p2.y != null) {
           strokeWeight(0);
-          fill(255, 255, 255); // color of the top of the wall
+          fill(175, 78, 41); // color of the top of the wall
           rect(colX, surface.p1.y, colWidth, surface.p2.y - surface.p1.y);
           surface = {
             p1: { y: null, h: null },
