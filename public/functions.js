@@ -26,7 +26,14 @@ function keyPressed() {
         paused = !paused;
     }
     if(keyCode == 84){
-      toggleChat();
+      if(moving){
+        toggleChat();
+      }
+    }
+    if(keyCode == 13){
+      if(chatInput.value()=="" && !moving){
+        toggleCanvas();
+      }
     }
     // return false; // prevent default
 }
@@ -51,10 +58,15 @@ function copyCode() {
 
 function toggleCanvas() {
     moving = true;
+    document.getElementById('chatInput').blur();
+    canvas.focus();
 }
 
 function toggleChat() {
     moving = false;
+    document.getElementById('chatInput').focus();
+    canvas.blur();
+    chatInput.value("");
 }
 
 function createCustom() {
