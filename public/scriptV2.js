@@ -294,7 +294,7 @@ function rayCast() {
     requestPointerLock();
   }
 
-  background(41, 169, 255);
+  background(107, 211, 255);
   // background(80);
 
   rays = [];
@@ -366,11 +366,11 @@ function rayCast() {
           let color = hsvToRgb(200, 100, map(rayDist, 0, 800, 100, 50));
           colFilling = { type: 'color', r: color[0], g: color[1], b: color[2] };
 
-          if (players.get(distance[3]) == null) {
-            players.set(distance[3], [colX, colX, rayDist]);
+          if (players.get(distance[4]) == null) {
+            players.set(distance[4], [colX, colX, rayDist, distance[3]]);
           } else {
-            const firstColX = players.get(distance[3])[0];
-            players.set(distance[3], [firstColX, colX, rayDist]);
+            const firstColX = players.get(distance[4])[0];
+            players.set(distance[4], [firstColX, colX, rayDist, distance[3]]);
           }
 
         } else {
@@ -476,10 +476,10 @@ function displayNames(players) {
   push();
   translate(0, yAxis);
 
-  for (let [username, colXs] of players) {
+  for (let [id, colXs] of players) {
     const colX = (colXs[0] + colXs[1]) / 2;
     textSize((8000 * scale) / colXs[2]);
-    text(username, colX, -20);
+    text(colXs[3], colX, -20);
   }
   pop();
 }

@@ -56,7 +56,7 @@ class Ray {
 
       if (points.length > 0) {
         if (point != false) {
-          distances.push([dist(points[0].x, points[0].y, this.pos1.x, this.pos1.y), 0.5, 'player', pla.getUname()]);
+          distances.push([dist(points[0].x, points[0].y, this.pos1.x, this.pos1.y), 0.5, 'player', pla.getUname(),pla.getID()]);
         } else {
           distances.push([dist(points[0].x, points[0].y, this.pos1.x, this.pos1.y), 0.5, 'player']);
         }

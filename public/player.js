@@ -8,6 +8,9 @@ class Player {
     this.uname = name;
     this.id = id;
   }
+  getID(){
+    return this.id;
+  }
   setID(id) {
     this.id = id;
   }

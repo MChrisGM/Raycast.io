@@ -74,9 +74,9 @@ io.sockets.on('connection',
         socket.on('username', function (username) {
             if (username.length <= 20) {
                 if (!(bannedUnames.includes(username))) {
-                    players[pID].name = username;
+                    players[pID].name = escape(username);
                 } else {
-                    players[pID].name = null;
+                    players[pID].name = "Guest_" + Math.floor(Math.random() * 1000);
                     socket.emit('clearUsername', null);
                 }
             } else {
