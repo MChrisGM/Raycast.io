@@ -40,15 +40,15 @@ function preload() {
 function socketFunctions() {
   socket = io.connect(window.location.href);
 
-  socket.on('setPlayerId', function(data) {
+  socket.on('setPlayerId', function (data) {
     pID = data;
   });
 
-  socket.on('clearUsername', function() {
+  socket.on('clearUsername', function () {
     nameField.value("");
   });
 
-  socket.on('joinLobby', function(data) {
+  socket.on('joinLobby', function (data) {
     lobby = data;
     console.log("Lobby Code: " + data);
     console.log(typeof data);
@@ -56,7 +56,7 @@ function socketFunctions() {
     socket.emit('lobbyInfo');
   });
 
-  socket.on('lobbyInfo', function(data) {
+  socket.on('lobbyInfo', function (data) {
     playerInfo = data;
     pListDiv.html("<b><u>Players(" + playerInfo.names.length + "/10): " + "</u><br><i>" + playerInfo.names.join('<br>') + "</b></i>");
 
@@ -72,7 +72,7 @@ function socketFunctions() {
     chatInput.attribute("placeholder", "Message " + lobby);
   });
 
-  socket.on('receiveMessage', function(data) {
+  socket.on('receiveMessage', function (data) {
     createMessage({ name: data.name, message: data.message, time: data.time });
   });
 }
@@ -365,10 +365,10 @@ function rayCast() {
           lineStroke = { r: color[0], g: color[1], b: color[2] };
 
           if (players.get(distance[3]) == null) {
-            players.set(distance[3], [xLine, xLine, rayDist]);
+            players.set(distance[3], [colX, colX, rayDist]);
           } else {
-            const firstXLine = players.get(distance[3])[0];
-            players.set(distance[3], [firstXLine, xLine, rayDist]);
+            const firstColX = players.get(distance[3])[0];
+            players.set(distance[3], [firstColX, colX, rayDist]);
           }
 
         } else {
