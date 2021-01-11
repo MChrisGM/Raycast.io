@@ -31,7 +31,7 @@ class Ray {
       let point = intersect(this.pos1.x, this.pos1.y, this.pos2.x, this.pos2.y, wall[0], wall[1], wall[2], wall[3]);
       if (point != false) {
         // distances.push([dist(this.pos1.x, this.pos1.y, point.x, point.y), wall[4]]);
-        distances.push([dist(this.pos1.x, this.pos1.y, point.x, point.y), wall[4],'wall']);
+        distances.push([dist(this.pos1.x, this.pos1.y, point.x, point.y), wall[4], 'wall', point, { x: wall[0], y: wall[1] }, { x: wall[2], y: wall[3] }]);
       }
     }
 
@@ -41,7 +41,7 @@ class Ray {
 
       let player = {
         radius: rad,
-        center: {x:pos.x*scale, y:pos.y*scale},
+        center: { x: pos.x * scale, y: pos.y * scale },
       };
 
       var line = {
@@ -55,13 +55,13 @@ class Ray {
       let point = true;
 
       if (points.length > 0) {
-        if(point!=false){
-          distances.push([dist(points[0].x,points[0].y,this.pos1.x,this.pos1.y), 0.5,'player', pla.getUname()]);
-        }else{
-          distances.push([dist(points[0].x,points[0].y,this.pos1.x,this.pos1.y), 0.5,'player']);
+        if (point != false) {
+          distances.push([dist(points[0].x, points[0].y, this.pos1.x, this.pos1.y), 0.5, 'player', pla.getUname()]);
+        } else {
+          distances.push([dist(points[0].x, points[0].y, this.pos1.x, this.pos1.y), 0.5, 'player']);
         }
-        
-        
+
+
       }
 
     }
